@@ -25,7 +25,7 @@
     <td><input name="name"></td> 
   </tr>
   <tr>
-    <td>아메일</td>
+    <td>이메일</td>
     <td><input name="email"></td> 
   </tr>
   <tr>

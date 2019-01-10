@@ -1,6 +1,8 @@
 package com.example.spring01.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -37,7 +39,7 @@ public class MemberDAOImpl implements MemberDAO {
     @Override
     public void deleteMember(String userId) {
         // TODO Auto-generated method stub
-
+        sqlSession.delete("member.deleteMember",userId);
     }
 
     @Override
@@ -49,7 +51,14 @@ public class MemberDAOImpl implements MemberDAO {
     @Override
     public boolean checkPw(String userId, String password) {
         // TODO Auto-generated method stub
-        return false;
+        boolean result = false;
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("userId", userId);
+        map.put("password", password);
+        int count = sqlSession.selectOne("member.checkPassword",map);
+        
+        if(count==1) result=true;
+        return result;
     }
 
 }

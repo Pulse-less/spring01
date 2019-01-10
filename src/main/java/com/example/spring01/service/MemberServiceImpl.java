@@ -37,7 +37,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void deleteMember(String userId) {
         // TODO Auto-generated method stub
-
+        memberDao.deleteMember(userId);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean checkPw(String userId, String password) {
         // TODO Auto-generated method stub
-        return false;
+        return memberDao.checkPw(userId, password);
     }
 
 }

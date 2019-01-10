@@ -14,8 +14,10 @@ $(function(){
     });
     
     $("#btnDelete").click(function(){
-        document.form1.action="${path}/member/delete.do";
-        document.form1.submit();
+        if(confirm("삭제하시겠습니까?")){
+	    	document.form1.action="${path}/member/delete.do";
+	        document.form1.submit();
+        }
     });
 });
 </script>
@@ -43,7 +45,12 @@ $(function(){
   </tr>
   <tr>
     <td>회원가입일자</td>
-    <td><fmt:formatDate value="${dto.joinDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td> 
+    <td>
+      <c:if test="${joinDate!=null }">
+        <fmt:formatDate value="${joinDate }" pattern="yyyy-MM-dd HH:mm:ss"/>
+      </c:if>
+      <fmt:formatDate value="${dto.joinDate }" pattern="yyyy-MM-dd HH:mm:ss"/>
+    </td> 
   </tr>
   <tr>
     <td colspan="2" align="center">

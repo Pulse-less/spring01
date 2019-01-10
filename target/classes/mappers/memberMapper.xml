@@ -26,4 +26,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         set password = #{password}, name = #{name}, email = #{email}
         where userId = #{userId}
     </update>
+    
+    <select id="checkPassword" resultType="int">
+        select count(*) from member
+        where userId = #{userId} and password = #{password}
+    </select>
+    
+    <delete id="deleteMember">
+        delete from member
+        where userId = #{userId}
+    </delete>
 </mapper>

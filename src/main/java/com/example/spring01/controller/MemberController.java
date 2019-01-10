@@ -1,5 +1,6 @@
 package com.example.spring01.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -7,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.spring01.model.dto.MemberDTO;
 import com.example.spring01.service.MemberService;
@@ -46,7 +48,28 @@ public class MemberController {
     
     @RequestMapping("member/update.do")
     public String update(MemberDTO dto, Model model) {
-        memberService.updateMember(dto);
-        return "redirect:/member/list.do";
+        boolean result = memberService.checkPw(dto.getUserId(), dto.getPassword());
+        if(result){
+            memberService.updateMember(dto);
+            return "redirect:/member/list.do";
+        }else{
+            model.addAttribute("dto",dto);
+            model.addAttribute("joinDate",memberService.viewMember(dto.getUserId()).getJoinDate());
+            model.addAttribute("message","비밀번호를 확인하세요.");
+            return "member/view";
+        }
+    }
+    
+    @RequestMapping("member/delete.do")
+    public String delete(String userId, String password, Model model) {
+        boolean result = memberService.checkPw(userId, password);
+        if(result) {
+            memberService.deleteMember(userId);
+            return "redirect:/member/list.do";
+        }else {
+            model.addAttribute("message","비밀번호를 확인하세요");
+            model.addAttribute("dto",memberService.viewMember(userId));
+            return "member/view";
+        }
     }
 }
